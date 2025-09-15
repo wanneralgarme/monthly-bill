@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($investment_capital < 0) $errors[] = "Investment cannot be negative.";
 
     if (!empty($errors)) {
-        echo "<div class='results' style='color: red;'><h2>Input Error</h2><ul>";
+        echo "<div class='results' style='color: red;' role='alert'><h2>Input Error</h2><ul>";
         foreach ($errors as $error) {
             echo "<li>" . htmlspecialchars($error) . "</li>";
         }
@@ -141,29 +141,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h1>Solar Set up Requirement Calculator</h1>
     <form method="post">
-        <label>Monthly Bill (₱):</label>
-        <input type="number" step="0.01" name="bill" value="<?php echo isset($_POST['bill']) ? htmlspecialchars($_POST['bill']) : ''; ?>" required>
+        <label for="bill">Monthly Bill (₱):</label>
+        <span id="bill-desc" style="font-size:12px;">Your average monthly electricity bill in pesos.</span>
+        <input id="bill" type="number" step="0.01" name="bill" value="<?php echo isset($_POST['bill']) ? htmlspecialchars($_POST['bill']) : ''; ?>" required aria-describedby="bill-desc">
 
-        <label>Billing Rate per kWh (₱):</label>
-        <input type="number" step="0.01" name="billing_rate" value="<?php echo isset($_POST['billing_rate']) ? htmlspecialchars($_POST['billing_rate']) : ''; ?>" required>
 
-        <label>Average Sun Hours per Day:</label>
-        <input type="number" step="0.01" name="sun_hours" value="<?php echo isset($_POST['sun_hours']) ? htmlspecialchars($_POST['sun_hours']) : ''; ?>" required>
+        <label for="billing_rate">Billing Rate per kWh (₱):</label>
+        <span id="billing_rate-desc" style="font-size:12px;">Cost per kilowatt-hour from your utility provider.</span>
+        <input id="billing_rate" type="number" step="0.01" name="billing_rate" value="<?php echo isset($_POST['billing_rate']) ? htmlspecialchars($_POST['billing_rate']) : ''; ?>" required aria-describedby="billing_rate-desc">
+        
 
-        <label>Panel Capacity (W):</label>
-        <input type="number" step="0.01" name="capacity_per_panel" value="<?php echo isset($_POST['capacity_per_panel']) ? htmlspecialchars($_POST['capacity_per_panel']) : ''; ?>" required>
+        <label for="sun_hours">Average Sun Hours per Day:</label>
+        <span id="sun_hours-desc" style="font-size:12px;">Typical number of full sun hours your location receives daily.</span>
+        <input id="sun_hours" type="number" step="0.01" name="sun_hours" value="<?php echo isset($_POST['sun_hours']) ? htmlspecialchars($_POST['sun_hours']) : ''; ?>" required aria-describedby="sun_hours-desc">
+        
 
-        <label>Average Demand Load (%):</label>
-        <input type="number" step="0.01" name="average_demand_load" value="<?php echo isset($_POST['average_demand_load']) ? htmlspecialchars($_POST['average_demand_load']) : ''; ?>" required>
+        <label for="capacity_per_panel">Panel Capacity (W):</label>
+        <span id="capacity_per_panel-desc" style="font-size:12px;">Wattage rating of a single solar panel.</span>
+        <input id="capacity_per_panel" type="number" step="0.01" name="capacity_per_panel" value="<?php echo isset($_POST['capacity_per_panel']) ? htmlspecialchars($_POST['capacity_per_panel']) : ''; ?>" required aria-describedby="capacity_per_panel-desc">
+        
 
-        <label>Battery Nominal Voltage (V):</label>
-        <input type="number" step="0.01" name="battery_nominal_voltage_use" value="<?php echo isset($_POST['battery_nominal_voltage_use']) ? htmlspecialchars($_POST['battery_nominal_voltage_use']) : ''; ?>" required>
+        <label for="average_demand_load">Average Demand Load (%):</label>
+        <span id="average_demand_load-desc" style="font-size:12px;">Percentage of your total load to be supplied by solar (0-100%).</span>
+        <input id="average_demand_load" type="number" step="0.01" name="average_demand_load" value="<?php echo isset($_POST['average_demand_load']) ? htmlspecialchars($_POST['average_demand_load']) : ''; ?>" required aria-describedby="average_demand_load-desc">
+        
 
-        <label>Nighttime Load Usage (%):</label>
-        <input type="number" step="0.01" name="average_demand_load_at_night" value="<?php echo isset($_POST['average_demand_load_at_night']) ? htmlspecialchars($_POST['average_demand_load_at_night']) : ''; ?>" required>
+        <label for="battery_nominal_voltage_use">Battery Nominal Voltage (V):</label>
+        <span id="battery_nominal_voltage_use-desc" style="font-size:12px;">Voltage rating of your battery bank (e.g., 12V, 24V).</span>
+        <input id="battery_nominal_voltage_use" type="number" step="0.01" name="battery_nominal_voltage_use" value="<?php echo isset($_POST['battery_nominal_voltage_use']) ? htmlspecialchars($_POST['battery_nominal_voltage_use']) : ''; ?>" required aria-describedby="battery_nominal_voltage_use-desc">
+        
 
-        <label>Investment (₱):</label>
-        <input type="number" step="0.01" name="investment" value="<?php echo isset($_POST['investment']) ? htmlspecialchars($_POST['investment']) : ''; ?>">
+        <label for="average_demand_load_at_night">Nighttime Load Usage (%):</label>
+        <span id="average_demand_load_at_night-desc" style="font-size:12px;">Percentage of your load used at night (0-100%).</span>
+        <input id="average_demand_load_at_night" type="number" step="0.01" name="average_demand_load_at_night" value="<?php echo isset($_POST['average_demand_load_at_night']) ? htmlspecialchars($_POST['average_demand_load_at_night']) : ''; ?>" required aria-describedby="average_demand_load_at_night-desc">
+        
+
+        <label for="investment">Investment (₱):</label>
+        <span id="investment-desc" style="font-size:12px;">Total capital you plan to invest in the solar setup.</span>
+        <input id="investment" type="number" step="0.01" name="investment" value="<?php echo isset($_POST['investment']) ? htmlspecialchars($_POST['investment']) : ''; ?>" aria-describedby="investment-desc">
+        
 
         <button type="submit">Calculate</button>
     </form>
