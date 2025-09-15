@@ -1,4 +1,5 @@
 <?php
+// Handle form submission on this
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = [];
     $monthly_bill = isset($_POST['bill']) ? floatval($_POST['bill']) : 0;
