@@ -1,4 +1,8 @@
 <?php
+// Version 1.0.1
+// Solar Setup Requirement Calculator and ROI Computation
+// Basic working script with input validation
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = [];
     $monthly_bill = isset($_POST['bill']) ? floatval($_POST['bill']) : 0;
